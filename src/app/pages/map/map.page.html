@@ -1,0 +1,119 @@
+<ion-header class="map-header">
+  <ion-toolbar lines="none">
+
+    <!-- SOL TARAF -->
+    <div slot="start" class="stats-container">
+
+      <ion-buttons>
+        <ion-back-button
+          defaultHref="home"
+          text=""
+          (click)="playClick()">
+        </ion-back-button>
+      </ion-buttons>
+
+      <div class="stat-box-wrapper can-border">
+
+        <span class="mini-label">
+          CAN
+        </span>
+
+        <div class="lives-wrapper">
+          <span
+            class="emoji-icon"
+            *ngFor="let h of [].constructor(gameService.userStats.lives)">
+            ❤️
+          </span>
+        </div>
+
+        <span
+          class="life-timer-text"
+          *ngIf="gameService.userStats.lives < 5">
+
+          {{ formatTime(gameService.userStats.nextLifeTime) }}
+
+        </span>
+      </div>
+    </div>
+
+    <!-- ORTA -->
+    <div class="header-center-fix">
+
+      <div class="nickname-neon-box">
+
+        <span class="user-avatar-emoji">
+          👤
+        </span>
+
+        <span class="user-display">
+          {{ currentNickname }}
+        </span>
+
+      </div>
+    </div>
+
+    <!-- SAĞ -->
+    <div slot="end" class="stats-container">
+
+      <div class="stat-box-wrapper gold-border">
+
+        <span class="mini-label">
+          ALTIN
+        </span>
+
+        <div class="stat-item">
+
+          <span class="emoji-icon gold-glow">
+            💰
+          </span>
+
+          <span class="gold-amount">
+            {{ gameService.userStats.gold }}
+          </span>
+
+        </div>
+      </div>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content
+  class="map-content"
+  [fullscreen]="true">
+
+  <div class="map-container">
+
+    <div
+      *ngFor="let level of levels; let i = index"
+      class="level-item"
+      [ngClass]="{
+        'left': i % 4 === 0,
+        'center-left': i % 4 === 1,
+        'center-right': i % 4 === 2,
+        'right': i % 4 === 3
+      }">
+
+      <div
+        class="level-circle"
+        [ngClass]="level.status"
+        (click)="goToQuiz(level)">
+
+        <span *ngIf="level.status !== 'locked'">
+          {{ level.id }}
+        </span>
+
+        <span *ngIf="level.status === 'locked'">
+          🔒
+        </span>
+
+        <div
+          class="pulse-ring"
+          *ngIf="level.status === 'active'">
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</ion-content>

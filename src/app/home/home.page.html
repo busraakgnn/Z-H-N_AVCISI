@@ -1,20 +1,266 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="main-menu">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="overlay">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <!-- BAŞLIK -->
+
+    <div class="header-container">
+
+      <h1 class="title-main">
+        ZİHİN
+      </h1>
+
+      <h1 class="title-sub">
+        AVCISI
+      </h1>
+
+    </div>
+
+    <!-- MENÜ -->
+
+    <div class="button-container">
+
+      <button
+        class="btn btn-play"
+        (click)="openLoginModal()">
+
+        OYUNA BAŞLA
+      </button>
+
+      <button
+        class="btn btn-outline"
+        (click)="openScoresModal()">
+
+        SKOR TABLOSU
+      </button>
+
+      <button
+        class="btn btn-outline"
+        (click)="openSettingsModal()">
+
+        AYARLAR
+      </button>
+
+      <button
+        class="btn btn-outline"
+        (click)="exitGame()">
+
+        ÇIKIŞ
+      </button>
+
+    </div>
+
+    <!-- LOGIN MODAL -->
+
+    <ion-modal
+      [isOpen]="isLoginModalOpen"
+      (didDismiss)="isLoginModalOpen = false"
+      class="cyber-modal">
+
+      <ng-template>
+
+        <div class="modal-center-container">
+
+          <div class="login-card">
+
+            <!-- GERİ -->
+
+            <button
+              class="back-arrow-btn"
+              (click)="isLoginModalOpen = false">
+
+              ←
+            </button>
+
+            <!-- BAŞLIK -->
+
+            <h2 class="modal-title">
+              AVCI KAYDI
+            </h2>
+
+            <!-- INPUT -->
+
+            <div class="input-wrapper">
+
+              <ion-item
+                lines="none"
+                class="custom-input">
+
+                <ion-label position="floating">
+                  NICKNAME
+                </ion-label>
+
+                <ion-input
+                  [(ngModel)]="currentNickname"
+                  placeholder="Adınızı girin...">
+
+                </ion-input>
+
+              </ion-item>
+
+            </div>
+
+            <!-- GİRİŞ -->
+
+            <button
+              class="btn-login-main"
+              (click)="handleLogin()">
+
+              OYUNA BAŞLA
+            </button>
+
+          </div>
+
+        </div>
+
+      </ng-template>
+
+    </ion-modal>
+
+    <!-- SCORE MODAL -->
+
+    <ion-modal
+      [isOpen]="isScoresModalOpen"
+      (didDismiss)="isScoresModalOpen = false"
+      class="cyber-modal">
+
+      <ng-template>
+
+        <div class="modal-center-container">
+
+          <div class="login-card score-card">
+
+            <h2 class="modal-title">
+              LİDERLER
+            </h2>
+
+            <!-- SCORE LIST -->
+
+            <div class="score-list">
+
+              <div
+                *ngFor="let score of highScores; let i = index"
+                class="score-item">
+
+                <span class="rank">
+                  #{{i+1}}
+                </span>
+
+                <span class="name">
+                  {{score.name}}
+                </span>
+
+                <span class="gold">
+                  {{score.points}} 💰
+                </span>
+
+              </div>
+
+              <div
+                *ngIf="highScores.length === 0"
+                class="no-data">
+
+                Henüz skor yok!
+
+              </div>
+
+            </div>
+
+            <!-- TAMAM -->
+
+            <button
+              class="btn-login-main"
+              (click)="isScoresModalOpen = false">
+
+              TAMAM
+            </button>
+
+          </div>
+
+        </div>
+
+      </ng-template>
+
+    </ion-modal>
+
+    <!-- SETTINGS MODAL -->
+
+    <ion-modal
+      [isOpen]="isSettingsModalOpen"
+      (didDismiss)="isSettingsModalOpen = false"
+      class="cyber-modal">
+
+      <ng-template>
+
+        <div class="modal-center-container">
+
+          <div class="login-card">
+
+            <!-- GERİ -->
+
+            <button
+              class="back-arrow-btn"
+              (click)="isSettingsModalOpen = false">
+
+              ←
+            </button>
+
+            <!-- BAŞLIK -->
+
+            <h2 class="modal-title">
+              AYARLAR
+            </h2>
+
+            <!-- SES -->
+
+            <button
+              class="btn-login-main"
+              (click)="toggleSound()">
+
+              {{ soundEnabled ? 'SESİ KAPAT' : 'SESİ AÇ' }}
+            </button>
+
+            <br><br>
+
+            <!-- İSİM -->
+
+            <button
+              class="btn-login-main"
+              (click)="changeNickname()">
+
+              İSİM DEĞİŞTİR
+            </button>
+
+            <br><br>
+
+            <!-- ÇIKIŞ -->
+
+            <button
+              class="btn-login-main"
+              (click)="logout()">
+
+              ÇIKIŞ YAP
+            </button>
+
+            <br><br>
+
+            <!-- HESAP -->
+
+            <button
+              class="btn-login-main"
+              (click)="deleteAccount()">
+
+              HESABI SİL
+            </button>
+
+          </div>
+
+        </div>
+
+      </ng-template>
+
+    </ion-modal>
+
   </div>
+
 </ion-content>

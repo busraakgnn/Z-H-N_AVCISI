@@ -1,0 +1,97 @@
+<ion-header class="ion-no-border">
+  <div class="header-wrapper">
+
+    <div class="stat-group">
+      <span class="label">CAN</span>
+
+      <div class="hearts">
+        <span *ngFor="let h of [].constructor(gameService.userStats.lives)">
+          ❤️
+        </span>
+      </div>
+    </div>
+
+    <div class="timer-circle" [ngClass]="getTimerClass()">
+      {{ remainingTime }}
+    </div>
+
+    <div class="stat-group align-end">
+      <span class="label">ALTIN</span>
+
+      <div class="gold-text">
+        💰 {{ gameService.userStats.gold }}
+      </div>
+    </div>
+
+  </div>
+</ion-header>
+
+<ion-content class="quiz-main-bg">
+
+  <div class="quiz-content-wrapper" *ngIf="currentQuestion">
+
+    <div class="question-container">
+
+      <div class="question-header">
+        SORU {{ currentIndex + 1 }} / {{ totalQuestions }}
+      </div>
+
+      <div class="question-body">
+        <p>{{ currentQuestion.soru }}</p>
+      </div>
+
+    </div>
+
+    <div class="options-container">
+
+      <button
+        *ngFor="let opt of currentQuestion.secenekler"
+        class="option-button"
+        [ngClass]="getOptionClass(opt)"
+        (click)="checkAnswer(opt)"
+        [disabled]="isAnswered || hiddenOptions.includes(opt)">
+
+        {{ opt }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+
+  <div class="joker-container">
+
+    <button
+      class="joker-btn"
+      (click)="useFiftyFifty()"
+      [disabled]="isAnswered || gameService.userStats.jokers.fiftyFifty === 0 || hiddenOptions.length > 0">
+
+      50:50 ({{ gameService.userStats.jokers.fiftyFifty }})
+
+    </button>
+
+    <button
+      class="joker-btn"
+      (click)="useAudienceJoker()"
+      [disabled]="isAnswered || gameService.userStats.jokers.audience === 0">
+
+      SEYİRCİ ({{ gameService.userStats.jokers.audience }})
+
+    </button>
+
+    <button
+      class="joker-btn"
+      (click)="usePassJoker()"
+      [disabled]="isAnswered || gameService.userStats.jokers.pass === 0">
+
+      PAS ({{ gameService.userStats.jokers.pass }})
+
+    </button>
+
+  </div>
+
+</ion-footer>
